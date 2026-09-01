@@ -6,6 +6,7 @@ const Portfolio = () => {
   const sectionRef = useRef(null);
 
   useEffect(() => {
+    const currentSection = sectionRef.current;
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -17,13 +18,13 @@ const Portfolio = () => {
       { threshold: 0.1 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    if (currentSection) {
+      observer.observe(currentSection);
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      if (currentSection) {
+        observer.unobserve(currentSection);
       }
     };
   }, []);
@@ -35,12 +36,14 @@ const Portfolio = () => {
       className={`bg-gray-50 py-16 sm:py-20 md:py-24 px-2 sm:px-4 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
     >
       <div className="w-full max-w-[95%] lg:max-w-7xl mx-auto">
-        <div className="mb-10 sm:mb-12 md:mb-16 text-center">
+        <div className={`mb-10 sm:mb-12 md:mb-16 text-center ${isVisible ? 'animate-slide-up anim-fill-both anim-delay-75' : 'opacity-0'}`}>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900">
             Projects
           </h2>
         </div>
-        <VideoEditingPortfolio embedded />
+        <div className={`${isVisible ? 'animate-slide-up anim-fill-both anim-delay-150' : 'opacity-0'}`}>
+          <VideoEditingPortfolio embedded />
+        </div>
       </div>
     </section>
   );

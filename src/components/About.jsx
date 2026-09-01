@@ -76,7 +76,7 @@ const About = () => {
       className={`bg-gray-50 py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
     >
       <div className="mx-auto max-w-6xl px-2 sm:px-4 lg:max-w-7xl">
-        <div className="mb-10 sm:mb-12 text-center">
+        <div className={`mb-10 sm:mb-12 text-center ${isVisible ? 'animate-slide-up anim-fill-both anim-delay-75' : 'opacity-0'}`}>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900">
             About Me
           </h2>
@@ -84,7 +84,7 @@ const About = () => {
 
         <div className="space-y-12 sm:space-y-14 rounded-2xl border border-slate-200 bg-white p-6 sm:p-10 md:p-12 lg:p-14 shadow-lg">
           {/* Main Introduction */}
-          <div className="space-y-6">
+          <div className={`space-y-6 ${isVisible ? 'animate-slide-up anim-fill-both anim-delay-150' : 'opacity-0'}`}>
             <p className="text-lg sm:text-xl leading-[1.8] text-slate-800">
               I'm <strong className="font-semibold text-navy">Cedrick Manzanilla</strong>, a DTC Performance Creative Editor with 4 years of experience creating UGC, VSLs, Meta ad creatives, and short-form content for brands and creators worldwide.
             </p>
@@ -100,7 +100,7 @@ const About = () => {
           </div>
 
           {/* What I Do Best */}
-          <div className="border-t border-slate-200 pt-10 sm:pt-12">
+          <div className={`border-t border-slate-200 pt-10 sm:pt-12 ${isVisible ? 'animate-slide-up anim-fill-both anim-delay-225' : 'opacity-0'}`}>
             <h3 className="text-2xl sm:text-3xl font-bold text-navy">
               What I Do Best
             </h3>
@@ -146,7 +146,7 @@ const About = () => {
           </div>
 
           {/* Tools I Use */}
-          <div className="border-t border-slate-200 pt-10 sm:pt-12">
+          <div className={`border-t border-slate-200 pt-10 sm:pt-12 ${isVisible ? 'animate-slide-up anim-fill-both anim-delay-300' : 'opacity-0'}`}>
             <h3 className="text-2xl sm:text-3xl font-bold text-navy">
               Tools I Use
             </h3>
@@ -163,7 +163,7 @@ const About = () => {
           </div>
 
           {/* Sources I Use */}
-          <div className="border-t border-slate-200 pt-10 sm:pt-12">
+          <div className={`border-t border-slate-200 pt-10 sm:pt-12 ${isVisible ? 'animate-slide-up anim-fill-both anim-delay-375' : 'opacity-0'}`}>
             <h3 className="text-2xl sm:text-3xl font-bold text-navy">
               Sources I Use
             </h3>
@@ -183,7 +183,7 @@ const About = () => {
           </div>
 
           {/* Communication Tools */}
-          <div className="border-t border-slate-200 pt-10 sm:pt-12">
+          <div className={`border-t border-slate-200 pt-10 sm:pt-12 ${isVisible ? 'animate-slide-up anim-fill-both anim-delay-450' : 'opacity-0'}`}>
             <h3 className="text-2xl sm:text-3xl font-bold text-navy">
               Communication Tools
             </h3>
@@ -203,7 +203,7 @@ const About = () => {
           </div>
 
           {/* Philosophy */}
-          <div className="border-t border-slate-200 pt-10 sm:pt-12">
+          <div className={`border-t border-slate-200 pt-10 sm:pt-12 ${isVisible ? 'animate-slide-up anim-fill-both anim-delay-525' : 'opacity-0'}`}>
             <p className="text-lg sm:text-xl leading-[1.8] text-slate-800">
               I have a strong understanding of what works in today's content landscape — from testing hooks to improving watch time and conversions. My goal isn't just editing videos, but helping brands scale content that drives real results.
             </p>
