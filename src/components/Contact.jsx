@@ -55,6 +55,27 @@ const Contact = () => {
   }, []);
 
   useEffect(() => {
+    const currentSection = sectionRef.current;
+    if (!currentSection) return;
+
+    const revealEls = currentSection.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    revealEls.forEach((el) => revealObserver.observe(el));
+    return () => revealObserver.disconnect();
+  }, []);
+
+  useEffect(() => {
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 300);
     };
@@ -74,17 +95,17 @@ const Contact = () => {
       className={`bg-gray-50 py-16 md:py-24 px-4 sm:px-6 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
     >
       <div className="mx-auto max-w-3xl">
-        <div className={`mb-10 text-center sm:mb-12 ${isVisible ? 'animate-slide-up anim-fill-both anim-delay-75' : 'opacity-0'}`}>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900">
+        <div className="mb-10 text-center sm:mb-12">
+          <h2 className="reveal text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900">
             Let's Work Together
           </h2>
-          <p className="mt-4 text-lg sm:text-xl leading-relaxed text-slate-600">
+          <p className="reveal mt-4 text-lg sm:text-xl leading-relaxed text-slate-600" style={{ transitionDelay: '80ms' }}>
             Open for freelance and remote work — reach out on any of these platforms.
           </p>
         </div>
 
         <div className="space-y-4">
-          {platformLinks.map((item, index) => {
+          {platformLinks.map((item, i) => {
             const Icon = item.icon;
             return (
               <a
@@ -92,8 +113,8 @@ const Contact = () => {
                 href={item.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`group flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:border-navy/30 hover:shadow-lg ${isVisible ? 'animate-slide-up anim-fill-both' : 'opacity-0'}`}
-                style={isVisible ? { animationDelay: `${150 + index * 75}ms` } : undefined}
+                className="reveal group flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:border-navy/30 hover:shadow-lg"
+                style={{ transitionDelay: `${i * 80 + 60}ms` }}
               >
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-navy text-white transition-colors group-hover:bg-navy-dark">
                   <Icon className="h-5 w-5 sm:h-6 sm:w-6" />

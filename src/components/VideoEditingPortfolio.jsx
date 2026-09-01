@@ -52,10 +52,11 @@ const sectionCopy = {
     'Five featured performance creative examples with full manual playback controls.',
 };
 
-export const ManualPreviewCard = ({ video, className = '' }) => {
+export const ManualPreviewCard = ({ video, className = '', delay = 0 }) => {
   return (
     <article
-      className={`overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl ${className}`}
+      className={`reveal overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
     >
       <div className={`relative ${video.aspectClass} overflow-hidden bg-slate-950`}>
         <video
@@ -80,7 +81,7 @@ export const ManualPreviewCard = ({ video, className = '' }) => {
   );
 };
 
-export const InteractivePreviewCard = ({ video, className = '' }) => {
+export const InteractivePreviewCard = ({ video, className = '', delay = 0 }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -99,7 +100,8 @@ export const InteractivePreviewCard = ({ video, className = '' }) => {
 
   return (
     <article
-      className={`overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl ${className}`}
+      className={`reveal overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
     >
       <div className={`relative ${video.aspectClass} overflow-hidden bg-slate-950`}>
         <video
@@ -154,20 +156,21 @@ export const FeaturedExamplesGrid = ({
       {showHeader && (
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900">{title}</h3>
-            <p className="mt-3 max-w-3xl text-base sm:text-lg leading-relaxed text-slate-600">
+            <h3 className="reveal text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900">{title}</h3>
+            <p className="reveal mt-3 max-w-3xl text-base sm:text-lg leading-relaxed text-slate-600" style={{ transitionDelay: '60ms' }}>
               {description}
             </p>
           </div>
-          {cta ? <div className="flex shrink-0">{cta}</div> : null}
+          {cta ? <div className="reveal flex shrink-0" style={{ transitionDelay: '100ms' }}>{cta}</div> : null}
         </div>
       )}
 
       <div className={`grid gap-5 ${compact ? 'grid-cols-1 sm:grid-cols-2 xl:grid-cols-5' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5'}`}>
-        {featuredExampleVideos.map((video) => (
+        {featuredExampleVideos.map((video, i) => (
           <ManualPreviewCard
             key={video.id}
             video={video}
+            delay={i * 70 + 60}
           />
         ))}
       </div>
@@ -175,9 +178,9 @@ export const FeaturedExamplesGrid = ({
   );
 };
 
-const ProjectCollectionButton = ({ title, description, href, buttonLabel }) => {
+const ProjectCollectionButton = ({ title, description, href, buttonLabel, delay = 0 }) => {
   return (
-    <div className="rounded-3xl border border-slate-200 bg-white p-6 text-center shadow-xl sm:p-8 md:p-10">
+    <div className="reveal rounded-3xl border border-slate-200 bg-white p-6 text-center shadow-xl sm:p-8 md:p-10" style={{ transitionDelay: `${delay}ms` }}>
       <h3 className="text-2xl sm:text-3xl font-bold text-slate-900">{title}</h3>
       <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base md:text-lg">
         {description}
@@ -203,12 +206,14 @@ const VideoEditingPortfolio = ({ embedded = false }) => {
           description="Browse my curated collection of standout performance creative work."
           href={TOP_CREATIVE_EXAMPLES_URL}
           buttonLabel="View Top Creative Examples"
+          delay={60}
         />
         <ProjectCollectionButton
           title="View All Examples"
           description="Open the full portfolio collection containing all of my video editing examples."
           href={ALL_EXAMPLES_URL}
           buttonLabel="View All Examples"
+          delay={120}
         />
       </div>
     );
@@ -220,17 +225,17 @@ const VideoEditingPortfolio = ({ embedded = false }) => {
         <div className="space-y-14 sm:space-y-16">
           <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
             <div>
-              <span className="inline-flex items-center rounded-full bg-navy px-4 py-1.5 text-sm font-semibold uppercase tracking-[0.2em] text-white shadow-lg">
+              <span className="reveal inline-flex items-center rounded-full bg-navy px-4 py-1.5 text-sm font-semibold uppercase tracking-[0.2em] text-white shadow-lg">
                 Projects
               </span>
-              <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900">
+              <h2 className="reveal mt-4 text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900" style={{ transitionDelay: '60ms' }}>
                 Video Editing Portfolio
               </h2>
-              <p className="mt-4 max-w-3xl text-base sm:text-lg md:text-xl leading-relaxed text-slate-600">
+              <p className="reveal mt-4 max-w-3xl text-base sm:text-lg md:text-xl leading-relaxed text-slate-600" style={{ transitionDelay: '100ms' }}>
                 Explore the featured examples first, then jump into the larger creative and full portfolio collections.
               </p>
             </div>
-            <div className="rounded-2xl bg-white p-5 sm:p-6 shadow-lg ring-1 ring-slate-200">
+            <div className="reveal rounded-2xl bg-white p-5 sm:p-6 shadow-lg ring-1 ring-slate-200" style={{ transitionDelay: '120ms' }}>
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-navy/70">Focus Areas</p>
               <p className="mt-3 text-base sm:text-lg font-semibold leading-relaxed text-slate-900">
                 UGC, VSL, Meta ad creatives, performance creative, and direct-response video editing.
@@ -249,12 +254,14 @@ const VideoEditingPortfolio = ({ embedded = false }) => {
               description="Browse my curated collection of standout performance creative work."
               href={TOP_CREATIVE_EXAMPLES_URL}
               buttonLabel="View Top Creative Examples"
+              delay={60}
             />
             <ProjectCollectionButton
               title="View All Examples"
               description="Open the full portfolio collection containing all of my video editing examples."
               href={ALL_EXAMPLES_URL}
               buttonLabel="View All Examples"
+              delay={120}
             />
           </div>
         </div>

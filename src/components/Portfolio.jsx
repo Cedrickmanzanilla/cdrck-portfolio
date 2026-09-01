@@ -29,6 +29,27 @@ const Portfolio = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const currentSection = sectionRef.current;
+    if (!currentSection) return;
+
+    const revealEls = currentSection.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    revealEls.forEach((el) => revealObserver.observe(el));
+    return () => revealObserver.disconnect();
+  }, []);
+
   return (
     <section
       ref={sectionRef}
@@ -36,14 +57,12 @@ const Portfolio = () => {
       className={`bg-gray-50 py-16 sm:py-20 md:py-24 px-2 sm:px-4 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
     >
       <div className="w-full max-w-[95%] lg:max-w-7xl mx-auto">
-        <div className={`mb-10 sm:mb-12 md:mb-16 text-center ${isVisible ? 'animate-slide-up anim-fill-both anim-delay-75' : 'opacity-0'}`}>
+        <div className="mb-10 sm:mb-12 md:mb-16 text-center reveal">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900">
             Projects
           </h2>
         </div>
-        <div className={`${isVisible ? 'animate-slide-up anim-fill-both anim-delay-150' : 'opacity-0'}`}>
-          <VideoEditingPortfolio embedded />
-        </div>
+        <VideoEditingPortfolio embedded revealObserver />
       </div>
     </section>
   );

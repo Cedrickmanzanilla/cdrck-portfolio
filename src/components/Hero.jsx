@@ -44,6 +44,27 @@ const Hero = () => {
   }, []);
 
   useEffect(() => {
+    const currentSection = sectionRef.current;
+    if (!currentSection) return;
+
+    const revealEls = currentSection.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    revealEls.forEach((el) => revealObserver.observe(el));
+    return () => revealObserver.disconnect();
+  }, []);
+
+  useEffect(() => {
     const mediaQuery = window.matchMedia('(min-width: 1024px)');
     const handleMediaChange = (event) => {
       setIsDesktopHero(event.matches);
@@ -103,7 +124,7 @@ const Hero = () => {
           <div className="relative order-1 flex w-full justify-center lg:items-end lg:justify-end">
             <div className="relative w-[min(82vw,21rem)] pt-5 sm:w-[min(78vw,24rem)] sm:pt-6 md:w-[min(74vw,27rem)] lg:h-[calc(100dvh-7rem)] lg:w-full lg:max-w-none lg:pt-0 lg:pr-2 xl:pr-4">
               {/* BOTTOM LAYER — floating videos, framed tightly around the image */}
-              <div className={`pointer-events-none absolute inset-0 z-[1] overflow-visible transition-opacity duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+              <div className="pointer-events-none absolute inset-0 z-[1] overflow-visible">
                 {featuredExampleVideos.map((video, index) => (
                   <div
                     key={video.id}
@@ -137,14 +158,15 @@ const Hero = () => {
               <img
                 src={heroImage}
                 alt="Cedrick Manzanilla - DTC Performance Creative Editor"
-                className={`relative z-[2] mx-auto block h-auto w-[84%] object-contain sm:w-[82%] md:w-[80%] lg:mx-0 lg:h-full lg:w-auto lg:max-w-full lg:object-bottom drop-shadow-[0_24px_48px_rgba(0,0,128,0.18)] ${isVisible ? 'animate-slide-up anim-fill-both anim-delay-75' : 'opacity-0'}`}
+                className="reveal relative z-[2] mx-auto block h-auto w-[84%] object-contain sm:w-[82%] md:w-[80%] lg:mx-0 lg:h-full lg:w-auto lg:max-w-full lg:object-bottom drop-shadow-[0_24px_48px_rgba(0,0,128,0.18)]"
+                style={{ transitionDelay: '180ms' }}
               />
             </div>
           </div>
 
           {/* RIGHT — hero text & CTAs (top layer, separate from image column on mobile) */}
           <div className="relative z-[3] order-2 flex flex-col justify-center space-y-4 py-2 text-center sm:space-y-5 sm:py-3 lg:py-6 lg:pl-2 lg:text-left xl:pl-4">
-            <div className={`flex flex-wrap justify-center gap-2 lg:justify-start ${isVisible ? 'animate-slide-up anim-fill-both anim-delay-150' : 'opacity-0'}`}>
+            <div className="reveal flex flex-wrap justify-center gap-2 lg:justify-start" style={{ transitionDelay: '80ms' }}>
               {['UGC', 'VSL', 'Meta Ad Creatives', 'Performance Creative', 'Direct Response'].map((item) => (
                 <span
                   key={item}
@@ -154,16 +176,16 @@ const Hero = () => {
                 </span>
               ))}
             </div>
-            <h1 className={`translate-x-[4%] text-3xl font-bold leading-tight text-slate-900 sm:translate-x-[4%] sm:text-4xl md:translate-x-[4%] md:text-5xl lg:translate-x-0 lg:text-[3.25rem] xl:text-6xl ${isVisible ? 'animate-slide-up anim-fill-both anim-delay-225' : 'opacity-0'}`}>
+            <h1 className="reveal translate-x-[4%] text-3xl font-bold leading-tight text-slate-900 sm:translate-x-[4%] sm:text-4xl md:translate-x-[4%] md:text-5xl lg:translate-x-0 lg:text-[3.25rem] xl:text-6xl" style={{ transitionDelay: '140ms' }}>
               DTC Performance <span className="text-navy">Creative Editor</span>
             </h1>
-            <h2 className={`translate-x-[4%] text-lg font-medium leading-relaxed text-slate-700 sm:translate-x-[4%] sm:text-xl md:translate-x-[4%] md:text-2xl lg:translate-x-0 lg:text-[1.65rem] xl:text-3xl ${isVisible ? 'animate-slide-up anim-fill-both anim-delay-300' : 'opacity-0'}`}>
+            <h2 className="reveal translate-x-[4%] text-lg font-medium leading-relaxed text-slate-700 sm:translate-x-[4%] sm:text-xl md:translate-x-[4%] md:text-2xl lg:translate-x-0 lg:text-[1.65rem] xl:text-3xl" style={{ transitionDelay: '200ms' }}>
               UGC, VSL, Meta ad creatives, and direct-response video editing built to stop scrolls, hold attention, and drive sales.
             </h2>
-            <p className={`mx-auto max-w-xl text-base leading-relaxed text-slate-700 sm:text-lg md:text-xl lg:mx-0 ${isVisible ? 'animate-slide-up anim-fill-both anim-delay-375' : 'opacity-0'}`}>
+            <p className="reveal mx-auto max-w-xl text-base leading-relaxed text-slate-700 sm:text-lg md:text-xl lg:mx-0" style={{ transitionDelay: '260ms' }}>
               I create performance-driven creatives for DTC brands that capture attention, hold retention, and are built to sell.
             </p>
-            <div className={`flex flex-col gap-3 pt-1 sm:flex-row sm:justify-center sm:gap-4 lg:justify-start ${isVisible ? 'animate-slide-up anim-fill-both anim-delay-450' : 'opacity-0'}`}>
+            <div className="reveal flex flex-col gap-3 pt-1 sm:flex-row sm:justify-center sm:gap-4 lg:justify-start" style={{ transitionDelay: '320ms' }}>
               <button
                 onClick={() => scrollToSection('portfolio')}
                 className="cursor-pointer rounded-lg bg-navy px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:scale-110 hover:bg-navy-dark hover:shadow-2xl active:scale-95 sm:px-8 sm:py-4 sm:text-lg md:px-10"
@@ -182,11 +204,12 @@ const Hero = () => {
           </div>
         </div>
 
-        <div className={`relative z-[3] mt-8 rounded-[2rem] border border-slate-200/80 bg-white/80 p-5 shadow-xl backdrop-blur-sm sm:mt-10 sm:p-6 md:mt-12 md:p-8 ${isVisible ? 'animate-slide-up anim-fill-both anim-delay-525' : 'opacity-0'}`}>
+        <div className="reveal relative z-[3] mt-8 rounded-[2rem] border border-slate-200/80 bg-white/80 p-5 shadow-xl backdrop-blur-sm sm:mt-10 sm:p-6 md:mt-12 md:p-8" style={{ transitionDelay: '380ms' }}>
           <FeaturedExamplesGrid
             title="Top 5 Featured Examples"
             description="Five featured performance creative examples — press play to watch with full audio and controls."
             compact
+            revealObserver
             cta={
               <button
                 onClick={() => scrollToSection('portfolio')}

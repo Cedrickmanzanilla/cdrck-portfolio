@@ -28,6 +28,27 @@ const About = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const currentSection = sectionRef.current;
+    if (!currentSection) return;
+
+    const revealEls = currentSection.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    revealEls.forEach((el) => revealObserver.observe(el));
+    return () => revealObserver.disconnect();
+  }, []);
+
   const tools = [
     'CapCut Pro',
     'DaVinci Resolve',
@@ -76,7 +97,7 @@ const About = () => {
       className={`bg-gray-50 py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
     >
       <div className="mx-auto max-w-6xl px-2 sm:px-4 lg:max-w-7xl">
-        <div className={`mb-10 sm:mb-12 text-center ${isVisible ? 'animate-slide-up anim-fill-both anim-delay-75' : 'opacity-0'}`}>
+        <div className="mb-10 sm:mb-12 text-center reveal">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900">
             About Me
           </h2>
@@ -84,30 +105,30 @@ const About = () => {
 
         <div className="space-y-12 sm:space-y-14 rounded-2xl border border-slate-200 bg-white p-6 sm:p-10 md:p-12 lg:p-14 shadow-lg">
           {/* Main Introduction */}
-          <div className={`space-y-6 ${isVisible ? 'animate-slide-up anim-fill-both anim-delay-150' : 'opacity-0'}`}>
-            <p className="text-lg sm:text-xl leading-[1.8] text-slate-800">
+          <div className="space-y-6">
+            <p className="reveal text-lg sm:text-xl leading-[1.8] text-slate-800" style={{ transitionDelay: '60ms' }}>
               I'm <strong className="font-semibold text-navy">Cedrick Manzanilla</strong>, a DTC Performance Creative Editor with 4 years of experience creating UGC, VSLs, Meta ad creatives, and short-form content for brands and creators worldwide.
             </p>
-            <p className="text-lg sm:text-xl leading-[1.8] text-slate-800">
+            <p className="reveal text-lg sm:text-xl leading-[1.8] text-slate-800" style={{ transitionDelay: '120ms' }}>
               I specialize in direct-response editing focused on attention, retention, and conversion. From strong hooks and scroll-stopping visuals to clean pacing, storytelling, and strategic use of text, sound design, and motion, I build creatives with performance in mind, not just aesthetics.
             </p>
-            <p className="text-lg sm:text-xl leading-[1.8] text-slate-800">
+            <p className="reveal text-lg sm:text-xl leading-[1.8] text-slate-800" style={{ transitionDelay: '180ms' }}>
               I've worked with clients across different markets, producing UGC-style ads, VSLs, talking-head content, faceless videos, and other performance-driven creatives. I combine creative editing with an understanding of audience behavior and platform-native content to help brands turn ideas into content that gets watched and takes action.
             </p>
-            <p className="text-lg sm:text-xl leading-[1.8] text-slate-800">
+            <p className="reveal text-lg sm:text-xl leading-[1.8] text-slate-800" style={{ transitionDelay: '240ms' }}>
               The goal is simple: make better creatives that capture attention, communicate the message clearly, and help brands sell.
             </p>
           </div>
 
           {/* What I Do Best */}
-          <div className={`border-t border-slate-200 pt-10 sm:pt-12 ${isVisible ? 'animate-slide-up anim-fill-both anim-delay-225' : 'opacity-0'}`}>
-            <h3 className="text-2xl sm:text-3xl font-bold text-navy">
+          <div className="border-t border-slate-200 pt-10 sm:pt-12">
+            <h3 className="reveal text-2xl sm:text-3xl font-bold text-navy">
               What I Do Best
             </h3>
 
             <div className="mt-8 space-y-6">
               <div>
-                <div className="mb-5 flex flex-wrap items-center gap-3">
+                <div className="reveal mb-5 flex flex-wrap items-center gap-3" style={{ transitionDelay: '60ms' }}>
                   <span className="rounded-full bg-navy px-4 py-1.5 text-sm font-semibold text-white">
                     Primary
                   </span>
@@ -125,8 +146,8 @@ const About = () => {
                     'Script structuring & optimization',
                     'Captions, subtitles, sound design, pacing, and visual flow',
                     'Stock footage & B-roll sourcing',
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-base sm:text-lg leading-relaxed text-slate-800">
+                  ].map((item, i) => (
+                    <li key={item} className="reveal flex items-start gap-3 text-base sm:text-lg leading-relaxed text-slate-800" style={{ transitionDelay: `${(i % 4) * 50 + 80}ms` }}>
                       <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-navy" />
                       {item}
                     </li>
@@ -134,7 +155,7 @@ const About = () => {
                 </ul>
               </div>
 
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-5 sm:p-6">
+              <div className="reveal rounded-xl border border-slate-200 bg-slate-50 p-5 sm:p-6" style={{ transitionDelay: '100ms' }}>
                 <h5 className="text-lg sm:text-xl font-bold text-slate-900">
                   AI Specialist
                 </h5>
@@ -146,15 +167,16 @@ const About = () => {
           </div>
 
           {/* Tools I Use */}
-          <div className={`border-t border-slate-200 pt-10 sm:pt-12 ${isVisible ? 'animate-slide-up anim-fill-both anim-delay-300' : 'opacity-0'}`}>
-            <h3 className="text-2xl sm:text-3xl font-bold text-navy">
+          <div className="border-t border-slate-200 pt-10 sm:pt-12">
+            <h3 className="reveal text-2xl sm:text-3xl font-bold text-navy">
               Tools I Use
             </h3>
             <div className="mt-6 flex flex-wrap gap-2.5 sm:gap-3">
-              {tools.map((tool) => (
+              {tools.map((tool, i) => (
                 <span
                   key={tool}
-                  className="rounded-full bg-navy px-4 py-2 text-sm sm:text-base font-medium text-white"
+                  className="reveal rounded-full bg-navy px-4 py-2 text-sm sm:text-base font-medium text-white"
+                  style={{ transitionDelay: `${(i % 8) * 40 + 60}ms` }}
                 >
                   {tool}
                 </span>
@@ -163,18 +185,19 @@ const About = () => {
           </div>
 
           {/* Sources I Use */}
-          <div className={`border-t border-slate-200 pt-10 sm:pt-12 ${isVisible ? 'animate-slide-up anim-fill-both anim-delay-375' : 'opacity-0'}`}>
-            <h3 className="text-2xl sm:text-3xl font-bold text-navy">
+          <div className="border-t border-slate-200 pt-10 sm:pt-12">
+            <h3 className="reveal text-2xl sm:text-3xl font-bold text-navy">
               Sources I Use
             </h3>
-            <p className="mt-4 text-base sm:text-lg leading-relaxed text-slate-700">
+            <p className="reveal mt-4 text-base sm:text-lg leading-relaxed text-slate-700" style={{ transitionDelay: '60ms' }}>
               Platforms I use to find stock footage, video clips, assets, and creative resources:
             </p>
             <div className="mt-5 flex flex-wrap gap-2.5 sm:gap-3">
-              {sources.map((source) => (
+              {sources.map((source, i) => (
                 <span
                   key={source}
-                  className="rounded-full border border-navy/20 bg-navy/5 px-4 py-2 text-sm sm:text-base font-medium text-navy"
+                  className="reveal rounded-full border border-navy/20 bg-navy/5 px-4 py-2 text-sm sm:text-base font-medium text-navy"
+                  style={{ transitionDelay: `${i * 50 + 80}ms` }}
                 >
                   {source}
                 </span>
@@ -183,18 +206,19 @@ const About = () => {
           </div>
 
           {/* Communication Tools */}
-          <div className={`border-t border-slate-200 pt-10 sm:pt-12 ${isVisible ? 'animate-slide-up anim-fill-both anim-delay-450' : 'opacity-0'}`}>
-            <h3 className="text-2xl sm:text-3xl font-bold text-navy">
+          <div className="border-t border-slate-200 pt-10 sm:pt-12">
+            <h3 className="reveal text-2xl sm:text-3xl font-bold text-navy">
               Communication Tools
             </h3>
-            <p className="mt-4 text-base sm:text-lg leading-relaxed text-slate-700">
+            <p className="reveal mt-4 text-base sm:text-lg leading-relaxed text-slate-700" style={{ transitionDelay: '60ms' }}>
               Platforms I use for collaboration and communication:
             </p>
             <div className="mt-5 flex flex-wrap gap-2.5 sm:gap-3">
-              {communicationTools.map((tool) => (
+              {communicationTools.map((tool, i) => (
                 <span
                   key={tool}
-                  className="rounded-full border border-navy/20 bg-navy/5 px-4 py-2 text-sm sm:text-base font-medium text-navy"
+                  className="reveal rounded-full border border-navy/20 bg-navy/5 px-4 py-2 text-sm sm:text-base font-medium text-navy"
+                  style={{ transitionDelay: `${i * 50 + 80}ms` }}
                 >
                   {tool}
                 </span>
@@ -203,8 +227,8 @@ const About = () => {
           </div>
 
           {/* Philosophy */}
-          <div className={`border-t border-slate-200 pt-10 sm:pt-12 ${isVisible ? 'animate-slide-up anim-fill-both anim-delay-525' : 'opacity-0'}`}>
-            <p className="text-lg sm:text-xl leading-[1.8] text-slate-800">
+          <div className="border-t border-slate-200 pt-10 sm:pt-12">
+            <p className="reveal text-lg sm:text-xl leading-[1.8] text-slate-800">
               I have a strong understanding of what works in today's content landscape — from testing hooks to improving watch time and conversions. My goal isn't just editing videos, but helping brands scale content that drives real results.
             </p>
           </div>
